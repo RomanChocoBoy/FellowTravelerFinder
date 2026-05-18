@@ -1,5 +1,8 @@
 import os
 import unittest
+from datetime import timedelta
+
+from datetime import date as dt_date
 
 from facade_db import Facade_DB
 
@@ -36,13 +39,16 @@ class BaseDBTestCase(unittest.TestCase):
     def create_passenger(self):
         return self.db.create_user("Passenger", "passenger@test.local", "+79000000002", "passenger")
 
+    def future_date(self, days=30):
+        return (dt_date.today() + timedelta(days=days)).isoformat()
+
     def create_trip(self):
         driver = self.create_driver()
         return self.db.publish_trip(
             driver_id=driver.id,
             from_city="Krasnoyarsk",
             to_city="Novosibirsk",
-            date="2026-05-10",
+            date=self.future_date(),
             time="10:00",
             price=1200.0,
             seats=3,

@@ -18,8 +18,8 @@ class TestBooking(BaseDBTestCase):
         approved = self.db.approve_booking(booking.id)
         self.assertTrue(approved)
 
-        updated_trip = self.db.search_trips("Krasnoyarsk", "Novosibirsk", "2026-05-10")[0]
-        self.assertEqual(updated_trip.available_seats, 2)
+        updated_trip = self.db.search_trips("Krasnoyarsk", "Novosibirsk")[0]
+        self.assertEqual(updated_trip["available_seats"], 2)
 
     def test_cancel_reservation(self):
         trip = self.create_trip()
@@ -30,8 +30,8 @@ class TestBooking(BaseDBTestCase):
         cancelled = self.db.cancel_reservation(booking.id)
         self.assertTrue(cancelled)
 
-        updated_trip = self.db.search_trips("Krasnoyarsk", "Novosibirsk", "2026-05-10")[0]
-        self.assertEqual(updated_trip.available_seats, 3)
+        updated_trip = self.db.search_trips("Krasnoyarsk", "Novosibirsk")[0]
+        self.assertEqual(updated_trip["available_seats"], 3)
 
     def test_get_reservations(self):
         trip = self.create_trip()

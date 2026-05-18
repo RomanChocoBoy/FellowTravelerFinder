@@ -5,6 +5,7 @@ class TestMessage(BaseDBTestCase):
     def test_send_and_get_messages(self):
         trip = self.create_trip()
         passenger = self.create_passenger()
+        self.db.create_booking(trip.id, passenger.id)
 
         sent = self.db.send_message(trip.id, passenger.id, trip.driver_id, "Hello")
         self.assertTrue(sent)
